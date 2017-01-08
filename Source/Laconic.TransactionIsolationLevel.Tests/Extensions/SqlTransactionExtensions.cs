@@ -9,6 +9,11 @@ namespace Laconic.TransactionIsolationLevel.Tests.Extensions
     {
         private const int CommandTimeout = 5;
 
+        public static void InsertMessage(this SqlTransaction transaction, string text)
+        {
+            transaction.ExecuteNonQuery($"INSERT INTO [dbo].[Messages] ([Text]) VALUES (N'{text}')");
+        }
+
         public static void UpdateMessage(this SqlTransaction transaction, int id, string text)
         {
             transaction.ExecuteNonQuery($"UPDATE [dbo].[Messages] SET [Text] = '{text}' WHERE [Id] = {id}");
