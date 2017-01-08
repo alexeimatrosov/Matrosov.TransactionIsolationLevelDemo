@@ -7,13 +7,13 @@ using NUnit.Framework;
 namespace Laconic.TransactionIsolationLevel.Tests
 {
     [TestFixture]
-    public class DirtyReadTests : TransactionTestFixtureBase
+    public class NonRepeatableReadTests : TransactionTestFixtureBase
     {
         [TestCase(IsolationLevel.ReadUncommitted)]
         [TestCase(IsolationLevel.ReadCommitted)]
         [TestCase(IsolationLevel.RepeatableRead)]
         [TestCase(IsolationLevel.Serializable)]
-        public void DirtyRead_IsolationLevel(IsolationLevel isolationLevel)
+        public void NonRepeatableRead_IsolationLevel(IsolationLevel isolationLevel)
         {
             var readerThread = new Thread(Reader);
             readerThread.Start(isolationLevel);
@@ -36,6 +36,7 @@ namespace Laconic.TransactionIsolationLevel.Tests
                     using (var transaction = connection.BeginTransaction(isolationLevel))
                     {
                         ReaderLogger.Info($"Transaction begun. Isolation level = {isolationLevel}.");
+                        ReaderLogger.Info(transaction.SelectMessage(1));
 
                         Thread.Sleep(500);
 
@@ -65,8 +66,6 @@ namespace Laconic.TransactionIsolationLevel.Tests
                         WriterLogger.Info($"Transaction begun. Isolation level = {IsolationLevel.ReadUncommitted}.");
                         WriterLogger.Info("Updating {Id = 1, Text = \"Quack!\"}.");
                         transaction.UpdateMessage(1, "Quack!");
-
-                        Thread.Sleep(500);
 
                         transaction.Commit();
                         WriterLogger.Info("Transaction committed.");

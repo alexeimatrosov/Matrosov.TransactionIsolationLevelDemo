@@ -7,7 +7,7 @@ namespace Laconic.TransactionIsolationLevel.Tests.Extensions
 {
     public static class SqlTransactionExtensions
     {
-        private const int CommandTimeout = 4;
+        private const int CommandTimeout = 5;
 
         public static void UpdateMessage(this SqlTransaction transaction, int id, string text)
         {
