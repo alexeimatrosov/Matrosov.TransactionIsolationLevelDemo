@@ -7,8 +7,8 @@
     <ProjectGuid>{4D2DFD41-BDE7-4D03-BED4-AB7A82DB4BE5}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Laconic.TransactionIsolationLevel.Tests</RootNamespace>
-    <AssemblyName>Laconic.TransactionIsolationLevel.Tests</AssemblyName>
+    <RootNamespace>Laconic.TransactionIsolationLevelDemo.Tests</RootNamespace>
+    <AssemblyName>Laconic.TransactionIsolationLevelDemo.Tests</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>

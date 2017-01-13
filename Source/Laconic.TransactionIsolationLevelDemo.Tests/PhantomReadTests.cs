@@ -1,19 +1,19 @@
 ﻿using System;
 using System.Data;
 using System.Threading;
-using Laconic.TransactionIsolationLevel.Tests.Extensions;
+using Laconic.TransactionIsolationLevelDemo.Tests.Extensions;
 using NUnit.Framework;
 
-namespace Laconic.TransactionIsolationLevel.Tests
+namespace Laconic.TransactionIsolationLevelDemo.Tests
 {
     [TestFixture]
-    public class NonRepeatableReadTests : TransactionTestFixtureBase
+    public class PhantomReadTests : TransactionTestFixtureBase
     {
         [TestCase(IsolationLevel.ReadUncommitted)]
         [TestCase(IsolationLevel.ReadCommitted)]
         [TestCase(IsolationLevel.RepeatableRead)]
         [TestCase(IsolationLevel.Serializable)]
-        public void NonRepeatableRead_IsolationLevel(IsolationLevel isolationLevel)
+        public void PhantomRead_IsolationLevel(IsolationLevel isolationLevel)
         {
             var readerThread = new Thread(Reader);
             readerThread.Start(isolationLevel);
@@ -27,7 +27,7 @@ namespace Laconic.TransactionIsolationLevel.Tests
 
         private static void Reader(object o)
         {
-            var isolationLevel = (IsolationLevel) o;
+            var isolationLevel = (IsolationLevel)o;
 
             try
             {
@@ -36,11 +36,11 @@ namespace Laconic.TransactionIsolationLevel.Tests
                     using (var transaction = connection.BeginTransaction(isolationLevel))
                     {
                         ReaderLogger.Info($"Transaction begun. Isolation level = {isolationLevel}.");
-                        ReaderLogger.Info(transaction.SelectMessage(1));
+                        ReaderLogger.Info($"Messages count = {transaction.SelectMessages().Length}");
 
                         Thread.Sleep(500);
 
-                        ReaderLogger.Info(transaction.SelectMessage(1));
+                        ReaderLogger.Info($"Messages count = {transaction.SelectMessages().Length}");
 
                         transaction.Commit();
                         ReaderLogger.Info("Transaction committed.");
@@ -64,8 +64,8 @@ namespace Laconic.TransactionIsolationLevel.Tests
                     using (var transaction = connection.BeginTransaction(IsolationLevel.ReadUncommitted))
                     {
                         WriterLogger.Info($"Transaction begun. Isolation level = {IsolationLevel.ReadUncommitted}.");
-                        WriterLogger.Info("Updating {Id = 1, Text = \"Quack!\"}.");
-                        transaction.UpdateMessage(1, "Quack!");
+                        WriterLogger.Info("Inserting {Text = \"Quack!\"}.");
+                        transaction.InsertMessage("Quack!");
 
                         transaction.Commit();
                         WriterLogger.Info("Transaction committed.");

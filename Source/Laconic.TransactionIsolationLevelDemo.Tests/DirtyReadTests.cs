@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Data;
 using System.Threading;
-using Laconic.TransactionIsolationLevel.Tests.Extensions;
+using Laconic.TransactionIsolationLevelDemo.Tests.Extensions;
 using NUnit.Framework;
 
-namespace Laconic.TransactionIsolationLevel.Tests
+namespace Laconic.TransactionIsolationLevelDemo.Tests
 {
     [TestFixture]
     public class DirtyReadTests : TransactionTestFixtureBase

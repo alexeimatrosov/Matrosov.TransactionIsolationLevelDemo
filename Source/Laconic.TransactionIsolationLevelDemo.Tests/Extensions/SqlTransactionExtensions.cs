@@ -3,7 +3,7 @@ using System.Data.Common;
 using System.Data.SqlClient;
 using System.Linq;
 
-namespace Laconic.TransactionIsolationLevel.Tests.Extensions
+namespace Laconic.TransactionIsolationLevelDemo.Tests.Extensions
 {
     public static class SqlTransactionExtensions
     {

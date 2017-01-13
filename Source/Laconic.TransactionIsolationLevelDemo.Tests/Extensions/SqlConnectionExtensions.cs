@@ -1,6 +1,6 @@
 ﻿using System.Data.SqlClient;
 
-namespace Laconic.TransactionIsolationLevel.Tests.Extensions
+namespace Laconic.TransactionIsolationLevelDemo.Tests.Extensions
 {
     public static class SqlConnectionExtensions
     {

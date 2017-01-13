@@ -1,4 +1,4 @@
-﻿namespace Laconic.TransactionIsolationLevel.Tests
+﻿namespace Laconic.TransactionIsolationLevelDemo.Tests
 {
     public class Message
     {
